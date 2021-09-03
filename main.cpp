@@ -8,26 +8,25 @@ int shownum = 3;
 
 struct Movie
 {
-    string name, genre;
+    string name, genre, director;
     float rating, price;
     int showtime[3];
 };
 
-struct Ticket
-{
-    string movieName, movieGenre, customerName, ticketNo, time;
-    float price;
-};
+
 
 struct Customer
 {
     string name;
-    struct Address
-    {
-        string city, subcity, house_no;
-    } customerAddress;
-    int phone_no;
-    Ticket cust_ticket;
+    int age;
+    string phone, address, username, password;
+};
+
+struct Ticket
+{
+    string cust_name, mov_name, time, seat_no;
+    int ticketCount;
+    float totalCost;
 };
 
 int showcount = 9;
