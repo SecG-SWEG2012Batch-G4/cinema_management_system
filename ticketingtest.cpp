@@ -6,34 +6,6 @@
 
 using namespace std;
 
-bool floatCheck(string a)
-{ // Checks whether a given string contains a float or not
-
-    int len = 0;
-
-    for (int j = 0; a[j]; j++)
-    {
-        len++;
-    }
-
-    for (int i = 0; a[i]; i++)
-    {
-
-        if ((int(a[i]) > 58 || int(a[i]) < 48) && int(a[i]) != 46)
-        {
-            return false;
-        }
-        if (i == len - 1)
-        {
-            if ((int(a[i]) < 58 && int(a[i]) >= 48))
-            {
-                return true;
-            }
-        }
-    }
-    return true;
-}
-
 //
 //Declaring Structures and Pointers
 //
@@ -47,7 +19,11 @@ struct Movie
 };
 
 int movieCount = 5;
-Movie *movies{new Movie[movieCount]{{"The Avengers", "Action", "Russo Brothers", 9.9, 55.00, {"9:00 C1", "10:00 C3", "11:00 C2"}, 100}, {"A Quiet Place", "Horror", "Russo Brothers", 9.9, 60.00, {"9:00 C1", "10:00 C3", "11:00 C2"}, 1}, {"Fast 9", "Action", "Russo Brothers", 9.9, 70.00, {"9:00 C1", "10:00 C3", "11:00 C2"}, 75}, {"Den of Thieves", "Adventure", "Russo Brothers", 9.9, 40.00, {"9:00 C1", "10:00 C3", "11:00 C2"}, 120}, {"What Happedned", "Drama", "Russo Brothers", 9.9, 90.00, {"9:00 C1", "10:00 C3", "11:00 C2"}, 100}}};
+Movie *movies{new Movie[movieCount]{{"The Avengers", "Action", "Russo Brothers", 9.9, 55.00, {"9:00 C1", "10:00 C3", "11:00 C2"}, 100},
+                                    {"A Quiet Place", "Horror", "Russo Brothers", 9.9, 60.00, {"9:00 C1", "10:00 C3", "11:00 C2"}, 1},
+                                    {"Fast 9", "Action", "Russo Brothers", 9.9, 70.00, {"9:00 C1", "10:00 C3", "11:00 C2"}, 75},
+                                    {"Den of Thieves", "Adventure", "Russo Brothers", 9.9, 40.00, {"9:00 C1", "10:00 C3", "11:00 C2"}, 120},
+                                    {"What Happedned", "Drama", "Russo Brothers", 9.9, 90.00, {"9:00 C1", "10:00 C3", "11:00 C2"}, 100}}};
 Movie *n_movies = new Movie[movieCount];
 
 struct Customer
@@ -58,8 +34,7 @@ struct Customer
 };
 
 int customerCount = 2;
-Customer *customers{new Customer[customerCount]{{"Yohannes", 20, "09121212", "Bole", "yohannesakd", "yohannesakd"},
-                                                {"Abe", 22, "0912122522", "Be", "abe", "abe"}}};
+Customer *customers{new Customer[customerCount]{{"Yohannes", 20, "09121212", "Bole", "yohannesakd", "yohannesakd"}, {"Abe", 22, "0912122522", "Be", "abe", "abe"}}};
 Customer *n_customers = new Customer[customerCount];
 
 struct Ticket
@@ -84,13 +59,66 @@ string adminUname = "admin", adminPass = "admin";
 //
 //prototyping Functions
 //
+bool floatCheck(string);
 void adminMenu();
+void adminLogin();
 void loginPage();
 void customerMenu();
-void loginPage();
 void customerLoginChoice();
 void customerLogin();
 void addBooked();
+void displayMovies();
+void inputTicket(Ticket, int);
+void bookMovie();
+void displayTicket();
+void makeSeats(int);
+void inputMovie(Movie, int);
+void addMovie();
+void deleteMovie();
+void modMovies();
+void displaycustomers();
+void inputCustomer(Customer, int);
+void addCustomer();
+void deleteCustomer();
+void deleteCustChoice();
+void modCustomers();
+void nullifyCustomerList();
+void displayTicketList();
+void deleteMovChoice();
+void deleteAllMovie();
+
+int main()
+{
+    loginPage();
+    return 0;
+}
+void displayTicketList()
+{
+    cout << left << setw(3) << "No"
+         << setw(25) << "Customer Name"
+         << setw(5) << "Age"
+         << setw(25) << "Movie Name"
+         << setw(10) << "Time and Cinema"
+         << setw(5) << "Tickets Purchased"
+         << setw(30) << "Seat No"
+         << setw(2) << " " << setw(10) << "Total Cost" << endl;
+    for (int i = 0; i < bookedTickets; i++)
+    {
+        cout << setw(3) << left << i + 1;
+        cout << setw(25) << tickets[i].cust_name;
+        cout << setw(5) << tickets[i].age;
+        cout << setw(25) << tickets[i].mov_name;
+        cout << setw(10) << tickets[i].timeandcinema;
+        cout << setw(5) << tickets[i].ticketCount;
+        for (int k = 0; k < tickets[i].ticketCount; k++)
+        {
+
+            cout << setw(5) << tickets[i].seat_no[k] << " | ";
+        }
+        cout << setw(12) << tickets[i].totalCost;
+        cout << endl;
+    }
+}
 
 void displayMovies()
 {
@@ -180,7 +208,7 @@ void bookMovie()
             n_tickets[i].seat_no[k] = tickets[i].seat_no[k];
         }
     }
-    cout << "Finished Copy";
+    cout << "Finished Copy" << endl;
 
     // for (int z = 0; z < (bookedTickets - y); z++)
     // {
@@ -221,21 +249,21 @@ void bookMovie()
         }
     }
     cout << "Successfully Added Ticket" << endl;
-    // for (int z = 0; z < (bookedTickets); z++)
-    // {
-    //     cout << tickets[z].cust_name << endl;
-    //     cout << tickets[z].mov_name << endl;
-    //     cout << tickets[z].timeandcinema << endl;
-    //     cout << tickets[z].ticketCount << endl;
-    //     cout << tickets[z].age << endl;
-    //     cout << tickets[z].totalCost << endl;
-    //     for (int k = 0; k < tickets[z].ticketCount; k++)
-    //     {
+    for (int z = 0; z < (bookedTickets); z++)
+    {
+        cout << tickets[z].cust_name << endl;
+        cout << tickets[z].mov_name << endl;
+        cout << tickets[z].timeandcinema << endl;
+        cout << tickets[z].ticketCount << endl;
+        cout << tickets[z].age << endl;
+        cout << tickets[z].totalCost << endl;
+        for (int k = 0; k < tickets[z].ticketCount; k++)
+        {
 
-    //         cout << tickets[z].seat_no[k] << ", ";
-    //     }
-    //     cout << endl;
-    // }
+            cout << tickets[z].seat_no[k] << ", ";
+        }
+        cout << endl;
+    }
     system("pause");
     customerMenu();
 }
@@ -246,15 +274,22 @@ void displayTicket()
     {
         if (customers[loginIndex].name == tickets[i].cust_name)
         {
-            for (int j = 0; j < 3; j++)
+            cout << tickets[i].cust_name << endl;
+            cout << tickets[i].mov_name << endl;
+            cout << tickets[i].timeandcinema << endl;
+            cout << tickets[i].ticketCount << endl;
+            cout << tickets[i].age << endl;
+            cout << tickets[i].totalCost << endl;
+            for (int k = 0; k < tickets[i].ticketCount; k++)
             {
-                ticketIndex = i;
+
+                cout << tickets[i].seat_no[k] << ", ";
             }
-            cout << "You have a ticket at index" << i << endl;
+            cout << endl;
         }
         else
         {
-            cout << "You have not booked any ticket yet.";
+            continue;
         }
     }
 
@@ -284,6 +319,15 @@ void displayTicket()
 //              << setw(6) << n_movies[i].time_cinema[2] << endl;
 //     }
 // }
+// int seats[100];
+
+void makeSeats(int seats[])
+{
+    for (int i = 1; i < 101; i++)
+    {
+        seats[i] = i;
+    }
+}
 
 void inputMovie(Movie movies[], int i = 0)
 {
@@ -359,7 +403,8 @@ void addMovie()
         }
     }
 }
-void deleteMovies()
+
+void deleteMovie()
 {
     displayMovies();
     int m, temp, n = 0;
@@ -414,7 +459,7 @@ void deleteMovies()
     Sleep(2000);
 }
 
-void editMovies()
+void modMovies()
 {
     system("cls");
     string choice;
@@ -434,23 +479,20 @@ void editMovies()
             {
                 addMovie();
                 system("cls");
-                editMovies();
+                modMovies();
                 break;
             }
             else if (choice == "2")
             {
                 system("cls");
-                deleteMovies();
-                displayMovies();
-                Sleep(3000);
-                editMovies();
+                deleteMovChoice();
                 break;
             }
             else if (choice == "3")
             {
                 displayMovies();
                 system("pause");
-                editMovies();
+                modMovies();
                 break;
             }
             else if (choice == "4")
@@ -552,8 +594,10 @@ void addCustomer()
         customers[i].password = n_customers[i].password;
     }
 }
-void deleteCustomers()
+
+void deleteCustomer()
 {
+    system("cls");
     displaycustomers();
     int m, temp, n = 0;
     cout << endl
@@ -564,10 +608,6 @@ void deleteCustomers()
     customerCount--;
     delete[] n_customers;
     n_customers = new Customer[customerCount];
-
-    cout << endl
-         << "first step pass"
-         << endl;
 
     for (int z = 0; z < temp; z++)
     {
@@ -599,7 +639,193 @@ void deleteCustomers()
     Sleep(2000);
 }
 
-void editCustomers()
+void nullifyCustomerlist()
+{
+    delete[] customers;
+    customerCount = 0;
+    customers = new Customer[customerCount];
+
+    cout << "Successfully Deleted all Entries, Going back to menu" << endl;
+    Sleep(2000);
+    modCustomers();
+}
+
+void nullifyMovieList()
+{
+    delete[] movies;
+    movieCount = 0;
+    movies = new Movie[movieCount];
+
+    cout << "Successfully Deleted all Entries, Going back to menu" << endl;
+    Sleep(2000);
+    modMovies();
+}
+
+void deleteAllCustomer()
+{
+    string choice;
+    cout
+        << "Are you sure you want to remove all entries?" << endl
+        << "1. Yes" << endl
+        << "2. No" << endl;
+    while (true)
+    {
+        cout << "Enter your Choice: ";
+        cin >> choice;
+        if (floatCheck(choice))
+        {
+            if (choice == "1")
+            {
+                nullifyCustomerlist();
+                break;
+            }
+            else if (choice == "2")
+            {
+                deleteCustChoice();
+                system("pause");
+                modCustomers();
+                break;
+            }
+            else
+                cout << "Please Enter a Valid Number" << endl;
+            continue;
+        }
+        else
+        {
+            cout << "Please Enter a Number" << endl;
+            continue;
+        }
+    }
+}
+
+void deleteAllMovie()
+{
+    string choice;
+    cout
+        << "Are you sure you want to remove all entries?" << endl
+        << "1. Yes" << endl
+        << "2. No" << endl;
+    while (true)
+    {
+        cout << "Enter your Choice: ";
+        cin >> choice;
+        if (floatCheck(choice))
+        {
+            if (choice == "1")
+            {
+                nullifyMovieList();
+                break;
+            }
+            else if (choice == "2")
+            {
+                deleteMovChoice();
+                system("pause");
+                modMovies();
+                break;
+            }
+            else
+                cout << "Please Enter a Valid Number" << endl;
+            continue;
+        }
+        else
+        {
+            cout << "Please Enter a Number" << endl;
+            continue;
+        }
+    }
+}
+
+void deleteCustChoice()
+{
+    system("cls");
+    string choice;
+    cout << "Select a Delete Option" << endl;
+    cout << "1. Single Entry" << endl
+         << "2. All Entries" << endl
+         << "3. Back" << endl;
+    while (true)
+    {
+        cout << "Enter your choice: ";
+        cin >> choice;
+        if (floatCheck(choice))
+        {
+            if (choice == "1")
+            {
+                deleteCustomer();
+                modCustomers();
+                break;
+            }
+            else if (choice == "2")
+            {
+                deleteAllCustomer();
+                cout << "All Entries Successfully deleted";
+                Sleep(2000);
+                modCustomers();
+                break;
+            }
+            else if (choice == "3")
+            {
+                modCustomers();
+                break;
+            }
+            else
+                cout << "Please Enter a Valid Number" << endl;
+            continue;
+        }
+        else
+        {
+            cout << "Please Enter a Number" << endl;
+            continue;
+        }
+    }
+}
+
+void deleteMovChoice()
+{
+    system("cls");
+    string choice;
+    cout << "Select a Delete Option" << endl;
+    cout << "1. Single Entry" << endl
+         << "2. All Entries" << endl
+         << "3. Back" << endl;
+    while (true)
+    {
+        cout << "Enter your choice: ";
+        cin >> choice;
+        if (floatCheck(choice))
+        {
+            if (choice == "1")
+            {
+                deleteMovie();
+                modMovies();
+                break;
+            }
+            else if (choice == "2")
+            {
+                deleteAllMovie();
+                cout << "All Entries Successfully deleted";
+                Sleep(2000);
+                modMovies();
+                break;
+            }
+            else if (choice == "3")
+            {
+                modMovies();
+                break;
+            }
+            else
+                cout << "Please Enter a Valid Number" << endl;
+            continue;
+        }
+        else
+        {
+            cout << "Please Enter a Number" << endl;
+            continue;
+        }
+    }
+}
+
+void modCustomers()
 {
     system("cls");
     string choice;
@@ -619,23 +845,20 @@ void editCustomers()
             {
                 addCustomer();
                 system("cls");
-                editCustomers();
+                modCustomers();
                 break;
             }
             else if (choice == "2")
             {
                 system("cls");
-                deleteCustomers();
-                displaycustomers();
-                Sleep(3000);
-                editCustomers();
+                deleteCustChoice();
                 break;
             }
             else if (choice == "3")
             {
                 displaycustomers();
                 system("pause");
-                editCustomers();
+                modCustomers();
                 break;
             }
             else if (choice == "4")
@@ -698,10 +921,11 @@ void customerLogin()
             system("cls");
             cout << "Login Successful, Redirecting" << endl;
             cout << "| # - - - - - - - - |";
-            Sleep(150);
+            Sleep(500);
             system("cls");
             cout << "Login Successful, Redirecting" << endl;
             cout << "| # # # # # # # # # |";
+            Sleep(250);
             customerMenu();
         }
         else
@@ -714,6 +938,7 @@ void customerLogin()
         customerLogin();
     }
 }
+
 void adminLogin()
 {
     string uName, pass;
@@ -793,6 +1018,7 @@ void customerLoginChoice()
         }
     }
 }
+
 void adminMenu()
 {
     string choice;
@@ -800,7 +1026,7 @@ void adminMenu()
     cout << "Welcome to the Admin Page" << endl
          << "1. Customer List" << endl
          << "2. Movie List" << endl
-         << "3. Admin List" << endl
+         << "3. Ticket List" << endl
          << "4. Logout" << endl;
     while (true)
     {
@@ -810,17 +1036,19 @@ void adminMenu()
         {
             if (choice == "1")
             {
-                editCustomers();
+                modCustomers();
                 break;
             }
             else if (choice == "2")
             {
-                editMovies();
+                modMovies();
                 break;
             }
             else if (choice == "3")
             {
-                //adminList();
+                displayTicketList();
+                system("pause");
+                adminMenu();
                 break;
             }
             else if (choice == "4")
@@ -933,10 +1161,30 @@ void loginPage()
     }
 }
 
-int main()
-{
+bool floatCheck(string a)
+{ // Checks whether a given string contains a float or not
 
-    loginPage();
+    int len = 0;
 
-    return 0;
+    for (int j = 0; a[j]; j++)
+    {
+        len++;
+    }
+
+    for (int i = 0; a[i]; i++)
+    {
+
+        if ((int(a[i]) > 58 || int(a[i]) < 48) && int(a[i]) != 46)
+        {
+            return false;
+        }
+        if (i == len - 1)
+        {
+            if ((int(a[i]) < 58 && int(a[i]) >= 48))
+            {
+                return true;
+            }
+        }
+    }
+    return true;
 }
