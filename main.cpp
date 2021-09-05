@@ -56,7 +56,7 @@ struct Customer
     string phone, address, username, password;
 };
 
-int customerCount = 1;
+int customerCount = 2;
 Customer *customers = new Customer[customerCount];
 Customer *n_customers = new Customer[customerCount];
 
@@ -73,10 +73,20 @@ Ticket *n_tickets = new Ticket[bookedTickets];
 
 Ticket *newOrder = new Ticket;
 
+string currentSession;
+
+//
+//Prototyping Functions
+//
 void adminMenu();
 void loginPage();
 void customerMenu();
+void loginPage();
 void customerLoginChoice();
+
+//
+// ////////////////////
+//
 void displayMovies()
 {
 
@@ -103,11 +113,13 @@ void displayMovies()
 
 void bookMovie()
 {
+    cout << "incomplete";
+    Sleep(2000);
+    customerMenu;
 }
 
 // void displaynewMovies()
 // {
-
 //     cout << left << setw(3) << "No"
 //          << setw(30) << "Name"
 //          << setw(15) << "Genre"
@@ -178,7 +190,7 @@ void initializeMovies()
     }
 }
 
-void addMovies()
+void addMovie()
 {
     // cout << "How many inputs: ";
     static int count = 0;
@@ -314,7 +326,7 @@ void editMovies()
         {
             if (choice == "1")
             {
-                addMovies();
+                addMovie();
                 system("cls");
                 editMovies();
                 break;
@@ -400,7 +412,7 @@ void inputCustomer(Customer customers[], int i = 0)
     getline(cin >> ws, customers[i].password);
 }
 
-Customer initialCust[1] = {{"Yohannes", 20, "09121212", "Bole", "yohannesakd", "yohannesakd"}};
+Customer initialCust[2] = {{"Yohannes", 20, "09121212", "Bole", "yohannesakd", "yohannesakd"}, {"Abe", 22, "0912122522", "Be", "abe", "abe"}};
 
 void initializeCustomers()
 {
@@ -414,53 +426,53 @@ void initializeCustomers()
         customers[i].password = initialCust[i].password;
     }
 }
+/*
+void addcustomers()
+{
+    // cout << "How many inputs: ";
+    static int count = 0;
 
-// void addcustomers()
-// {
-//     // cout << "How many inputs: ";
-//     static int count = 0;
+    if (count++ == 0)
+    {
+        initializeCustomers();
+    }
+    else
+    {
+        customerCount++;
+        delete[] n_customers;
+        n_customers = new Customer[customerCount];
+        for (int i = 0; i < (customerCount - 1); i++)
+        {
+            n_customers[i].name = customers[i].name;
+            n_customers[i].age = customers[i].age;
+            n_customers[i].phone = customers[i].phone;
+            n_customers[i].address = customers[i].address;
+            n_customers[i].username = customers[i].username;
+            n_customers[i].password = customers[i].password;
+        }
+        cout << endl
+             << "Taking new Inputs at index " << customerCount << endl;
 
-//     if (count++ == 0)
-//     {
-//         initializeCustomers();
-//     }
-//     else
-//     {
-//         customerCount++;
-//         delete[] n_customers;
-//         n_customers = new Customer[customerCount];
-//         for (int i = 0; i < (customerCount - 1); i++)
-//         {
-//             n_customers[i].name = customers[i].name;
-//             n_customers[i].age = customers[i].age;
-//             n_customers[i].phone = customers[i].phone;
-//             n_customers[i].address = customers[i].address;
-//             n_customers[i].username = customers[i].username;
-//             n_customers[i].password = customers[i].password;
-//         }
-//         cout << endl
-//              << "Taking new Inputs at index " << customerCount << endl;
+        inputCustomer(n_customers, customerCount);
 
-//         inputCustomer(n_customers, customerCount);
+        delete[] customers;
+        customers = new Customer[customerCount];
 
-//         delete[] customers;
-//         customers = new Customer[customerCount];
+        for (int i = 0; i < customerCount; i++)
+        {
+            customers[i].name = n_customers[i].name;
+            customers[i].age = n_customers[i].age;
+            customers[i].phone = n_customers[i].phone;
+            customers[i].address = n_customers[i].address;
+            customers[i].username = n_customers[i].username;
+            customers[i].password = n_customers[i].password;
+        }
 
-//         for (int i = 0; i < customerCount; i++)
-//         {
-//             customers[i].name = n_customers[i].name;
-//             customers[i].age = n_customers[i].age;
-//             customers[i].phone = n_customers[i].phone;
-//             customers[i].address = n_customers[i].address;
-//             customers[i].username = n_customers[i].username;
-//             customers[i].password = n_customers[i].password;
-//         }
-
-//         delete[] n_customers;
-//     }
-// }
-
-void addCustomers()
+        delete[] n_customers;
+    }
+}
+*/
+void addCustomer()
 {
     static int count = 0;
 
@@ -579,7 +591,7 @@ void editCustomers()
         {
             if (choice == "1")
             {
-                addCustomers();
+                addCustomer();
                 system("cls");
                 editCustomers();
                 break;
@@ -621,6 +633,7 @@ void editCustomers()
         }
     }
 }
+
 string custUname = "user",
        custPass = "user";
 string adminUname = "admin", adminPass = "admin";
@@ -628,6 +641,7 @@ string adminUname = "admin", adminPass = "admin";
 void customerLogin()
 {
     string uName, pass;
+    int loginIndex;
     system("cls");
     cout << "Enter Credentials" << endl;
     while (true)
@@ -640,24 +654,52 @@ void customerLogin()
         {
             customerLoginChoice();
         }
+
+        for (int i = 0; i < customerCount; i++)
+        {
+            if (uName == customers[i].username)
+            {
+                loginIndex = i;
+                break;
+            }
+        }
+
         cout << "Enter your Password: ";
         cin >> pass;
         if (pass == "0")
         {
             customerLoginChoice();
         }
-
-        if (uName == custUname && pass == custPass)
+        if (pass == customers[loginIndex].password)
         {
-
+            currentSession = uName;
+            system("cls");
+            cout << "Login Successful, Redirecting";
+            Sleep(1000);
             customerMenu();
-            break;
         }
         else
         {
             cout << "Invalid Credentials, Try Again";
             continue;
         }
+
+        //     if (pass == customers[loginIndex].password)
+        //     {
+        //         {
+        //             currentSession = uName;
+        //             customerMenu();
+        //             break;
+        //         }
+        //     }
+        // else
+        // {
+        //     cout << "Wrong Credentials, Try Again!" << endl;
+        //     break;
+        // }
+
+        system("pause");
+        customerLogin();
     }
 }
 void adminLogin()
@@ -716,7 +758,7 @@ void customerLoginChoice()
             }
             else if (choice == "2")
             {
-                addCustomers();
+                addCustomer();
                 cout << "Customer Successfully Registered, Please Login";
                 Sleep(2000);
                 system("cls");
@@ -790,6 +832,10 @@ void customerMenu()
 {
     string choice;
     system("cls");
+
+    cout << "\t\t\t\t\t\t\t"
+         << "User: " << currentSession << endl;
+
     cout << "Welcome to the Customer Page" << endl
          << "1. Book a Movie" << endl
          << "2. Show Movies List" << endl
@@ -867,10 +913,11 @@ void loginPage()
         }
     }
 }
+
 int main()
 {
-    addMovies();
-    addCustomers();
+    addMovie();
+    addCustomer();
     loginPage();
 
     return 0;
