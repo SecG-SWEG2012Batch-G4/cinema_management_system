@@ -4,6 +4,33 @@
 #include <istream>
 
 using namespace std;
+bool floatCheck(string a)
+{ // Checks whether a given string contains a float or not
+
+    int len = 0;
+
+    for (int j = 0; a[j]; j++)
+    {
+        len++;
+    }
+
+    for (int i = 0; a[i]; i++)
+    {
+
+        if ((int(a[i]) > 58 || int(a[i]) < 48) && int(a[i]) != 46)
+        {
+            return false;
+        }
+        if (i == len - 1)
+        {
+            if ((int(a[i]) < 58 && int(a[i]) >= 48))
+            {
+                return true;
+            }
+        }
+    }
+    return true;
+}
 
 struct Movie
 {
@@ -159,7 +186,110 @@ void deleteMovies()
     cout << "Movie Successfully Deleted, Going Back to Menu" << endl;
     Sleep(2000);
 }
+void displayMovies()
+{
+
+    cout << left << setw(3) << "No"
+         << setw(30) << "Name"
+         << setw(15) << "Genre"
+         << setw(30) << "Director"
+         << setw(10) << "Rating4"
+         << setw(10) << "Price"
+         << setw(20) << "Showtimes" << endl;
+    for (int i = 0; i < movieCount; i++)
+    {
+        cout << setw(3) << left << i + 1
+             << setw(30) << movies[i].name
+             << setw(15) << movies[i].genre
+             << setw(30) << movies[i].director
+             << setw(10) << movies[i].rating
+             << setw(10) << movies[i].price
+             << setw(6) << movies[i].showtime[0] << "|"
+             << setw(6) << movies[i].showtime[1] << "|"
+             << setw(6) << movies[i].showtime[2] << endl;
+    }
+}
+void displaynewMovies()
+{/*
+
+    cout << left << setw(3) << "No"
+         << setw(30) << "Name"
+         << setw(15) << "Genre"
+         << setw(30) << "Director"
+         << setw(10) << "Price"
+         << setw(10) << "Price"
+         << setw(20) << "Showtimes" << endl;
+    for (int i = 0; i < movieCount; i++)
+    {
+        cout << setw(3) << left << i + 1
+             << setw(30) << n_movies[i].name
+             << setw(15) << n_movies[i].genre
+             << setw(30) << n_movies[i].director
+             << setw(10) << n_movies[i].rating
+             << setw(10) << n_movies[i].price
+             << setw(6) << n_movies[i].showtime[0] << "|"
+             << setw(6) << n_movies[i].showtime[1] << "|"
+             << setw(6) << n_movies[i].showtime[2] << endl;
+    }
+}
+*/
+}
+void editMovies()
+{
+    system("cls");
+    string choice;
+    cout << "VELCOME" << endl
+         << "1. Add movie" << endl
+         << "2. Delete movie" << endl
+         << "3. Show Movies" << endl
+         << "4. Exit" << endl;
+    while (true)
+    {
+        cout << "Enter your choice: ";
+        cin >> choice;
+        if (floatCheck(choice))
+        {
+            if (choice == "1")
+            {
+                addMovies();
+                system("cls");
+                editMovies();
+                break;
+            }
+            else if (choice == "2")
+            {
+                system("cls");
+                deleteMovies();
+                displayMovies();
+                Sleep(10000);
+                editMovies();
+                break;
+            }
+            else if (choice == "3")
+            {
+                displayMovies();
+                system("pause");
+                editMovies();
+                break;
+            }
+            else if (choice == "4")
+            {
+                exit(0);
+                break;
+            }
+            else
+                cout << "Please Enter a Valid Number" << endl;
+            continue;
+        }
+        else
+        {
+            cout << "Please Enter a Number" << endl;
+            continue;
+        }
+    }
+}
 int main()
+
 {
 
 
