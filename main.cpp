@@ -76,7 +76,7 @@ Ticket *newOrder = new Ticket;
 void adminMenu();
 void loginPage();
 void customerMenu();
-
+void customerLoginChoice();
 void displayMovies()
 {
 
@@ -716,7 +716,7 @@ void customerLoginChoice()
             }
             else if (choice == "2")
             {
-                addCustomer();
+                addCustomers();
                 cout << "Customer Successfully Registered, Please Login";
                 Sleep(2000);
                 system("cls");
