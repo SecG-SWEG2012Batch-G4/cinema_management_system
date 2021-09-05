@@ -622,7 +622,124 @@ void editCustomers()
         }
     }
 }
+string custUname = "user",
+       custPass = "user";
+string adminUname = "admin", adminPass = "admin";
 
+void customerLogin()
+{
+    string uName, pass;
+    system("cls");
+    cout << "Enter Credentials" << endl;
+    while (true)
+    {
+        cout << "0. Back" << endl
+             << endl;
+        cout << "Enter your Username: ";
+        cin >> uName;
+        if (uName == "0")
+        {
+            customerLoginChoice();
+        }
+        cout << "Enter your Password: ";
+        cin >> pass;
+        if (pass == "0")
+        {
+            customerLoginChoice();
+        }
+
+        if (uName == custUname && pass == custPass)
+        {
+
+            customerMenu();
+            break;
+        }
+        else
+        {
+            cout << "Invalid Credentials, Try Again";
+            continue;
+        }
+    }
+}
+void adminLogin()
+{
+    string uName, pass;
+    system("cls");
+    cout << "Enter Credentials" << endl;
+    while (true)
+    {
+        cout << "0. Back" << endl
+             << endl;
+        cout << "Enter your Username: ";
+        cin >> uName;
+        if (uName == "0")
+        {
+            loginPage();
+        }
+        cout << "Enter your Password: ";
+        cin >> pass;
+        if (pass == "0")
+        {
+            loginPage();
+        }
+
+        if (uName == adminUname && pass == adminPass)
+        {
+            adminMenu();
+            break;
+        }
+        else
+        {
+            cout << "Invalid Credentials, Try Again";
+            continue;
+        }
+    }
+}
+
+void customerLoginChoice()
+{
+    string choice;
+    system("cls");
+    cout
+        << "1. Registered Customer" << endl
+        << "2. New Customer" << endl
+        << "3. Back" << endl;
+    while (true)
+    {
+        cout << "Enter your choice: ";
+        cin >> choice;
+        if (floatCheck(choice))
+        {
+            if (choice == "1")
+            {
+                customerLogin();
+                break;
+            }
+            else if (choice == "2")
+            {
+                addCustomer();
+                cout << "Customer Successfully Registered, Please Login";
+                Sleep(2000);
+                system("cls");
+                customerLogin();
+                break;
+            }
+            else if (choice == "3")
+            {
+                loginPage();
+                break;
+            }
+            else
+                cout << "Please Enter a Valid Number" << endl;
+            continue;
+        }
+        else
+        {
+            cout << "Please Enter a Number" << endl;
+            continue;
+        }
+    }
+}
 void adminMenu()
 {
     string choice;
@@ -732,12 +849,12 @@ void loginPage()
         {
             if (choice == "1")
             {
-                customerMenu();
+                customerLoginChoice();
                 break;
             }
             else if (choice == "2")
             {
-                adminMenu();
+                adminLogin();
                 break;
             }
             else
@@ -751,7 +868,6 @@ void loginPage()
         }
     }
 }
-
 int main()
 {
     addMovies();
