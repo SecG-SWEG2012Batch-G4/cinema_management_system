@@ -3,6 +3,7 @@
 #include <iomanip>
 #include <istream>
 #include <windows.h>
+#include <time.h>
 
 using namespace std;
 
@@ -76,7 +77,7 @@ void inputMovie(Movie, int);
 void addMovie();
 void deleteMovie();
 void modMovies();
-void displaycustomers();
+void displayCustomers();
 void inputCustomer(Customer, int);
 void addCustomer();
 void deleteCustomer();
@@ -94,56 +95,116 @@ int main()
 }
 void displayTicketList()
 {
-    cout << left << setw(3) << "No"
+    for (int i = 0; i <= 145; i++)
+    {
+        cout << "-";
+    }
+    cout << endl
+         << "|" << left << setw(3) << "No"
+         << "|"
          << setw(25) << "Customer Name"
+         << "|"
          << setw(5) << "Age"
+         << "|"
          << setw(25) << "Movie Name"
-         << setw(10) << "Time and Cinema"
-         << setw(5) << "Tickets Purchased"
+         << "|"
+         << setw(12) << "Time and Cinema"
+         << " |"
+         << setw(10) << "Tickets Purchased"
+         << "     |"
          << setw(30) << "Seat No"
-         << setw(2) << " " << setw(10) << "Total Cost" << endl;
+         << setw(2) << " " << setw(10) << "Total Cost"
+         << "|" << endl;
     for (int i = 0; i < bookedTickets; i++)
     {
-        cout << setw(3) << left << i + 1;
-        cout << setw(25) << tickets[i].cust_name;
-        cout << setw(5) << tickets[i].age;
-        cout << setw(25) << tickets[i].mov_name;
-        cout << setw(10) << tickets[i].timeandcinema;
-        cout << setw(5) << tickets[i].ticketCount;
+        cout << "|" << setw(3) << left << i + 1;
+        cout << "|" << setw(25) << tickets[i].cust_name;
+        cout << "|" << setw(5) << tickets[i].age;
+        cout << "|" << setw(25) << tickets[i].mov_name;
+        cout << "|" << setw(10) << tickets[i].timeandcinema;
+        cout << "|" << setw(10) << tickets[i].ticketCount;
         for (int k = 0; k < tickets[i].ticketCount; k++)
         {
 
-            cout << setw(5) << tickets[i].seat_no[k] << " | ";
+            cout << "|" << setw(5) << tickets[i].seat_no[k];
         }
         cout << setw(12) << tickets[i].totalCost;
         cout << endl;
     }
+    for (int i = 0; i <= 145; i++)
+    {
+        cout << "-";
+    }
+    cout << endl;
 }
 
 void displayMovies()
 {
+    for (int i = 0; i <= 135; i++)
+    {
+        cout << "-";
+    }
+    cout << endl
+         << "|" << left << setw(3) << "No"
+         << setw(25) << "Name"
+         << setw(11) << "|Genre"
+         << setw(21) << "|Director"
+         << setw(8) << "|Rating"
+         << setw(8) << "|Price"
+         << setw(36) << "|       Time and Cinema"
+         << setw(2) << " " << setw(12) << "|Available Seats    |" << endl;
+    for (int i = 0; i < movieCount; i++)
+    {
+        cout << "|" << setw(3) << left << i + 1
+             << setw(25) << movies[i].name << "|"
+             << setw(10) << movies[i].genre << "|"
+             << setw(20) << movies[i].director << "|"
+             << setw(7) << movies[i].rating << "|"
+             << setw(7) << movies[i].price << "|"
+             << setw(10) << movies[i].time_cinema[0] << " | "
+             << setw(10) << movies[i].time_cinema[1] << " | "
+             << setw(10) << movies[i].time_cinema[2] << " | "
+             << setw(2) << " " << setw(15) << movies[i].seats << " | " << endl;
+    }
+    for (int i = 0; i <= 135; i++)
+    {
+        cout << "-";
+    }
+    cout << endl;
+}
 
-    cout << left << setw(3) << "No"
+void displaySingleMovie(int i)
+{
+    for (int i = 0; i <= 135; i++)
+    {
+        cout << "-";
+    }
+    cout << endl
+         << "|" << left << setw(3) << "No"
          << setw(25) << "Name"
          << setw(10) << "Genre"
          << setw(20) << "Director"
-         << setw(7) << "Rating"
-         << setw(7) << "Price"
-         << setw(30) << "Time and Cinema"
-         << setw(2) << " " << setw(10) << "Available Seats" << endl;
-    for (int i = 0; i < movieCount; i++)
+         << setw(10) << "Rating"
+         << setw(10) << "Price"
+         << setw(36) << "          Time and Cinema"
+         << setw(2) << " " << setw(10) << "Available Seats"
+         << "   |" << endl;
+
+    cout << "|" << setw(3) << left << i + 1
+         << setw(25) << movies[i].name
+         << setw(10) << movies[i].genre
+         << setw(20) << movies[i].director
+         << setw(10) << movies[i].rating
+         << setw(10) << movies[i].price
+         << setw(10) << movies[i].time_cinema[0] << "| "
+         << setw(10) << movies[i].time_cinema[1] << "| "
+         << setw(10) << movies[i].time_cinema[2]
+         << setw(4) << " " << setw(10) << movies[i].seats << "        |" << endl;
+    for (int i = 0; i <= 135; i++)
     {
-        cout << setw(3) << left << i + 1
-             << setw(25) << movies[i].name
-             << setw(10) << movies[i].genre
-             << setw(20) << movies[i].director
-             << setw(7) << movies[i].rating
-             << setw(7) << movies[i].price
-             << setw(8) << movies[i].time_cinema[0] << " | "
-             << setw(8) << movies[i].time_cinema[1] << " | "
-             << setw(8) << movies[i].time_cinema[2]
-             << setw(2) << " " << setw(10) << movies[i].seats << endl;
+        cout << "-";
     }
+    cout << endl;
 }
 
 void inputTicket(Ticket tickets[], int i)
@@ -517,24 +578,39 @@ void modMovies()
     }
 }
 
-void displaycustomers()
+void displayCustomers()
 {
+    for (int i = 0; i <= 120; i++)
+    {
+        cout << "-";
+    }
 
-    cout << left << setw(3) << "No"
+    cout << endl
+         << "|" << left << setw(3) << "No"
          << setw(30) << "Name"
+         << "|"
          << setw(15) << "Age"
+         << "|"
          << setw(30) << "Phone"
-         << setw(10) << "Address"
+         << "|"
+         << setw(38) << "Address"
+         << "|"
          << endl;
     for (int i = 0; i < customerCount; i++)
     {
-        cout << setw(3) << left << i + 1
-             << setw(30) << customers[i].name
-             << setw(15) << customers[i].age
-             << setw(30) << customers[i].phone
-             << setw(10) << customers[i].address
+        cout << "|" << setw(3) << left << i + 1
+             << setw(30) << customers[i].name << "|"
+             << setw(15) << customers[i].age << "|"
+             << setw(30) << customers[i].phone << "|"
+             << setw(38) << customers[i].address << "|"
              << endl;
     }
+
+    for (int i = 0; i <= 120; i++)
+    {
+        cout << "-";
+    }
+    cout << endl;
 }
 
 void inputCustomer(Customer customers[], int i = 0)
@@ -598,7 +674,7 @@ void addCustomer()
 void deleteCustomer()
 {
     system("cls");
-    displaycustomers();
+    displayCustomers();
     int m, temp, n = 0;
     cout << endl
          << "Which Customer would you like to remove: ";
@@ -856,7 +932,7 @@ void modCustomers()
             }
             else if (choice == "3")
             {
-                displaycustomers();
+                displayCustomers();
                 system("pause");
                 modCustomers();
                 break;
